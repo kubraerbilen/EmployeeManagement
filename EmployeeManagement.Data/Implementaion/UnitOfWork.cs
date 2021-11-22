@@ -1,5 +1,6 @@
 ﻿using EmployeeManagement.Data.Contracts;
 using EmployeeManagement.Data.DataContext;
+using System;
 
 namespace EmployeeManagement.Data.Implementaion
 {
@@ -11,12 +12,18 @@ namespace EmployeeManagement.Data.Implementaion
         {
             _ctx = ctx;
             employeeLeaveAllocation = new EmployeeLeaveAllocationRepository(_ctx);
-            employeeLeaveRequest = new EmployeeLeaveRequestRepository(_ctx);
-            employeeLeaveType = new EmployeeLeaveTypeRepository(_ctx);
+            employeeLeaveRequestRepository = new EmployeeLeaveRequestRepository(_ctx);
+            employeeLeaveTypeRepository = new EmployeeLeaveTypeRepository(_ctx);
         }
         public IEmployeeLeaveAllocationRepository employeeLeaveAllocation { get; private set; }
-        public IEmployeeLeaveRequestRepository employeeLeaveRequest { get; private set; }
-        public IEmployeeLeaveTypeRepository employeeLeaveType { get; private set; }
+        public IEmployeeLeaveRequestRepository employeeLeaveRequestRepository { get; private set; }
+        public IEmployeeLeaveTypeRepository employeeLeaveTypeRepository { get; private set; }
+
+        IEmployeeLeaveAllocationRepository IUnitOfWork.employeeLeaveAllocationRepository => throw new NotImplementedException();
+
+        IEmployeeLeaveRequestRepository IUnitOfWork.employeeLeaveRequestRepository => throw new NotImplementedException();
+
+        IEmployeeLeaveTypeRepository IUnitOfWork.employeeLeaveTypeRepository => throw new NotImplementedException();
 
         public void Save()
         {
@@ -25,6 +32,16 @@ namespace EmployeeManagement.Data.Implementaion
         public void Dispose()
         {
             _ctx.Dispose();
-        }    
+        }
+
+        void IUnitOfWork.Save()
+        {
+            throw new NotImplementedException();
+        }
+
+        void IDisposable.Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

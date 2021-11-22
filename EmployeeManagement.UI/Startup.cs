@@ -41,6 +41,9 @@ namespace EmployeeManagement.UI
             //services.AddScoped<IEmployeeLeaveTypeRepository, EmployeeLeaveTypeRepository>();
 
             services.AddScoped<IEmployeeLeaveTypeBusinessEngine, EmployeeLeaveTypeBusinessEngine>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddControllersWithViews();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +69,9 @@ namespace EmployeeManagement.UI
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller = Home}/{action = Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

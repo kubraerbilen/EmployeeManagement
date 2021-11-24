@@ -1,15 +1,29 @@
 ﻿using EmployeeManagement.Common.ResultModels;
-using EmployeeManagement.Data.DbModels;
-using System;
+using EmployeeManagement.Common.VModels;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EmployeeManagement.BusinessEngine.Contracts
 {
     public interface IEmployeeLeaveTypeBusinessEngine
     {
-        Result<List<EmployeeLeaveType>> GetAllEmployeeLeaveTypes();
+        Result<List<EmployeeLeaveTypeVM>> GetAllEmployeeLeaveTypes();
+
+        /// <summary>
+        /// New Employee Leave Type Create method
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        Result<EmployeeLeaveTypeVM> CreateEmployeeLeaveType(EmployeeLeaveTypeVM model);
+
+        /// <summary>
+        /// Get Employee Leave Type By Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Result<EmployeeLeaveTypeVM> GetAllEmployeeLeaveType(int id);
+
+        Result<EmployeeLeaveTypeVM> EditEmployeeLeaveType(EmployeeLeaveTypeVM model);
+
+        Result<EmployeeLeaveTypeVM> RemoveEmployeeLeaveType(int id);
     }
 }

@@ -16,7 +16,6 @@ namespace EmployeeManagement.Data.DataContext
         {
 
         }
-
         public DbSet<Employee> Employee { get; set; }
         public DbSet<EmployeeLeaveAllocation> EmployeeLeaveAllocations { get; set; }
         public DbSet<EmployeeLeaveRequest> EmployeeLeaveRequests { get; set; }

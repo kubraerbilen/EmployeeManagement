@@ -1,12 +1,15 @@
 using EmployeeManagement.BusinessEngine.Contracts;
 using EmployeeManagement.BusinessEngine.Implementaion;
+using EmployeeManagement.Common.EmailOperationModels;
 using EmployeeManagement.Common.Mappings;
 using EmployeeManagement.Data.Contracts;
 using EmployeeManagement.Data.DataContext;
+using EmployeeManagement.Data.DbModels;
 using EmployeeManagement.Data.Implementaion;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,20 +33,34 @@ namespace EmployeeManagement.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
-            services.AddDbContext<EmployeeManagementContext>
-                (options => options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+            services.AddDbContext<EmployeeManagementContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("IdentityConnection")));
 
-            services.AddAutoMapper(typeof(Maps));
-
-            //services.AddScoped<IEmployeeLeaveAllocationRepository, EmployeeLeaveAllocationRepository>();
-            //services.AddScoped<IEmployeeLeaveRequestRepository, EmployeeLeaveRequestRepository>();
-            //services.AddScoped<IEmployeeLeaveTypeRepository, EmployeeLeaveTypeRepository>();
-
+            services.AddSingleton<IEmailSender, EmailSender>();
+            services.Configure<EmailOptions>(Configuration);
+            //*********************************************************//
             services.AddScoped<IEmployeeLeaveTypeBusinessEngine, EmployeeLeaveTypeBusinessEngine>();
+            services.AddScoped<IEmployeeLeaveRequestBusinessEngine, EmployeeLeaveRequestBusinessEngine>();
+            services.AddScoped<IEmployeeLeaveAssignBusinessEngine, EmployeeLeaveAssignBusinessEngine>();
+            services.AddScoped<IWorkOrderBusinessEngine, WorkOrderBusinessEngine>();
+            services.AddScoped<IEmployeeBusinessEngine, EmployeeBusinessEngine>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddControllersWithViews();
+            //*********************************************************//
+            services.AddAutoMapper(typeof(Maps));
+            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddEntityFrameworkStores<UdemyEmployeeManagementContext>();
+
+            services.AddIdentity<Employee, IdentityRole>().AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<EmployeeManagementContext>();
+
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
+            services.AddMvc();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(3600);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

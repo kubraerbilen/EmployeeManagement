@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EmployeeManagement.Common.ConstantsModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace EmployeeManagement.Common.VModels
 {
     public class EmployeeLeaveRequestVM :BaseVM
     {
+        public EnumEmployeeLeaveRequestStatus ApprovedStatus;
+
         public string RequestingEmployeeId { get; set; }
         public EmployeeVM RequestingEmployee { get; set; }
 

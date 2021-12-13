@@ -2,7 +2,7 @@
 
 namespace EmployeeManagement.Data.Contracts
 {
-    public interface IEmployeeLeaveAllocationRepository : IRepositoryBase<EmployeeLeaveAllocation>
+    public interface IWorkOrderRepository : IRepositoryBase<WorkOrder>
     {
 
     }

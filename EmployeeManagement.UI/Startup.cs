@@ -1,3 +1,4 @@
+using Castle.Core.Smtp;
 using EmployeeManagement.BusinessEngine.Contracts;
 using EmployeeManagement.BusinessEngine.Implementaion;
 using EmployeeManagement.Common.EmailOperationModels;

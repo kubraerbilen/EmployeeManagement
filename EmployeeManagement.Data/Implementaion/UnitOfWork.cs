@@ -1,6 +1,5 @@
 ﻿using EmployeeManagement.Data.Contracts;
 using EmployeeManagement.Data.DataContext;
-using System;
 
 namespace EmployeeManagement.Data.Implementaion
 {
@@ -14,34 +13,24 @@ namespace EmployeeManagement.Data.Implementaion
             employeeLeaveAllocation = new EmployeeLeaveAllocationRepository(_ctx);
             employeeLeaveRequestRepository = new EmployeeLeaveRequestRepository(_ctx);
             employeeLeaveTypeRepository = new EmployeeLeaveTypeRepository(_ctx);
+            employeeRepository = new EmployeeRepository(_ctx);
+            workOrderRepository = new WorkOrderRepository(_ctx);
         }
+
         public IEmployeeLeaveAllocationRepository employeeLeaveAllocation { get; private set; }
         public IEmployeeLeaveRequestRepository employeeLeaveRequestRepository { get; private set; }
         public IEmployeeLeaveTypeRepository employeeLeaveTypeRepository { get; private set; }
-
-        IEmployeeLeaveAllocationRepository IUnitOfWork.employeeLeaveAllocationRepository => throw new NotImplementedException();
-
-        IEmployeeLeaveRequestRepository IUnitOfWork.employeeLeaveRequestRepository => throw new NotImplementedException();
-
-        IEmployeeLeaveTypeRepository IUnitOfWork.employeeLeaveTypeRepository => throw new NotImplementedException();
+        public IEmployeeRepository employeeRepository { get; private set; }
+        public IWorkOrderRepository workOrderRepository { get; private set; }
 
         public void Save()
         {
             _ctx.SaveChanges();
         }
+
         public void Dispose()
         {
             _ctx.Dispose();
-        }
-
-        void IUnitOfWork.Save()
-        {
-            throw new NotImplementedException();
-        }
-
-        void IDisposable.Dispose()
-        {
-            throw new NotImplementedException();
         }
     }
 }

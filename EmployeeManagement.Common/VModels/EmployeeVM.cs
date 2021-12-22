@@ -3,10 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EmployeeManagement.Common.VModels
 {
-    public class EmployeeVM 
+    public class EmployeeVM
     {
         public string Id { get; set; }
-        [Display(Name="Kullanıcı Adı")]
+
+        [Display(Name ="Kullanıcı Adı")]
         public string UserName { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
@@ -14,6 +15,5 @@ namespace EmployeeManagement.Common.VModels
         public string LastName { get; set; }
         public string TaxId { get; set; }
         public DateTime DateOfBirth { get; set; }
-
     }
 }
